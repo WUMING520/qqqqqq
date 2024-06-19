@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>支付宝支付示例</title>
+</head>
+<body>
+    <h1>点击以下按钮唤起收银台支付</h1>
+    <a href="javascript:void(0)" class="btn tradenoPay">支付宝交易号唤起支付</a>
+
+    <script>
+        function ready(callback) {
+            // 如果jsbridge已经注入则直接调用
+            if (window.AlipayJSBridge) {
+                callback && callback();
+            } else {
+                // 如果没有注入则监听注入的事件
+                document.addEventListener('AlipayJSBridgeReady', callback, false);
+            }
+        }
+
+        ready(function(){
+            document.querySelector('.tradenoPay').addEventListener('click', function() {
+                AlipayJSBridge.call("tradePay", {
+                    tradeNO: "2024061722001104721408498922"  // 替换为实际的交易号
+                }, function(result) {
+                    alert(JSON.stringify(result));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
